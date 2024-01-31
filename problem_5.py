@@ -1,3 +1,7 @@
+from timeit import default_timer as timer
+from sympy import *
+import math
+
 def smallest_num_divisible_by_1_to_20():
     """
     :return smallest positive number divisible by 1, 2, 3...20 (without a remainder)
@@ -7,7 +11,7 @@ def smallest_num_divisible_by_1_to_20():
     mod_is_zero = 0
 
     while(not found):
-        smallest_num += 20
+        smallest_num += 21
         for idx in range(1,21):
             if smallest_num % idx == 0:
                mod_is_zero += 1
@@ -24,22 +28,23 @@ def smallest_num_divisible_by_1_to_20_fast():
     """
     :return smallest positive number divisible by 1, 2, 3...20 (without a remainder)
     faster method than first attempt above
+    for algorithm explaination see: https://projecteuler.net/overview=0005
     """
-    list = []
-    for idx in range(1,20):
-        list = list + [idx]
+    smallest_num = 1
 
-    return list 
+    for num in range(2,20):
+        if isprime(num):
+            prime_num_exponents = floor(math.log(20) / math.log(num))
+            smallest_num *= num**prime_num_exponents
 
-def gcd(a, b):
-    """
-    Computes the greatest common divisor of two integers using the Euclidean algorithm.
-    """
-    while b:
-        a, b = b, a % b   # 21, 7 -> # 7, 0
-    return a
+    return smallest_num 
 
-# print(smallest_num_divisible_by_1_to_20()) # 232792560 (correct!)
-print(gcd(49, 21))
-# print(smallest_num_divisible_by_1_to_20_fast()) 
+start = timer()
+print(smallest_num_divisible_by_1_to_20()) # 232792560 (correct!)
+end = timer()
+print("The 'slow' algorithm takes: ", round(end - start, 6), "sec") # Time in seconds, e.g. 5.38091952400282
 
+start = timer()
+print(smallest_num_divisible_by_1_to_20_fast()) # 232792560 (correct!)
+end = timer()
+print("The 'fast' algorithm takes: ", round(end - start, 6), "sec") # Time in seconds, e.g. 5.38091952400282

@@ -8,40 +8,33 @@ num_nonnum_list = []
 for line in Lines:
     only_numbers = [int(i) for i in line.split() if i.isdigit()]
     only_non_number = [str(j) for j in line.split() if j.isalpha()]
-    # print(type(only_numbers))
     list = [''.join(str(x) for x in only_numbers), ''.join(str(x) for x in only_non_number)]
     num_nonnum_list.append(list)
-    # list_of_numbers_extracted.append(list)
     list_of_numbers_extracted.extend(only_numbers)
     count += 1
-    # print("Line{}: {}".format(count, only_numbers))
-print(num_nonnum_list, '\n')
 
-# list_of_numbers_extracted.sort()
+# SORT 2D LIST with each list in form: [number, word]
+num_nonnum_list = sorted(num_nonnum_list, key=lambda x: int(x[0]))
+# print(num_nonnum_list)
 
+list_of_numbers_extracted.sort()
 # print("Largest number in list is: {}", list_of_numbers_extracted[-1])
 
 # EXTRACT RIGHT-MOST PYRAMID NUMBERS
-# count = 0
-# latest_num = 0
-# end_of_pyramid_nums = []
+count = 0
+latest_num = 0
+end_of_pyramid_nums = []
 
 # print(list_of_numbers_extracted[-1])
 
-# while latest_num < list_of_numbers_extracted[-1]:
-#     count += 1
-#     latest_num += count
-#     end_of_pyramid_nums.append(latest_num)
+while latest_num < list_of_numbers_extracted[-1]:
+    count += 1
+    latest_num += count
+    end_of_pyramid_nums.append(latest_num)
 
 # print(end_of_pyramid_nums)
+next_string = ""
+for num in end_of_pyramid_nums:
+    next_string += str(num_nonnum_list[num-1][1]) + " "
 
-
-
-
-
-# list1 = [0,1]
-# list2 = [2,3]
-# list3 = [list1]
-# list3.extend([list2])
-
-# print(list3)
+print(next_string)
